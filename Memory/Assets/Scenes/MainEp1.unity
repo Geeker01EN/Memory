@@ -294,6 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rows: 2
   cols: 4
+  alreadyActiveCard: 0
 --- !u!4 &1187001093
 Transform:
   m_ObjectHideFlags: 0
