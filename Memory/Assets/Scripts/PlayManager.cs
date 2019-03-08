@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class PlayManager : MonoBehaviour
 
     void Start()
     {
+        rows = PlayerPrefs.GetInt("rows");
+        cols = PlayerPrefs.GetInt("cols");
+
         numberofCards = rows * cols;
 
         cards = new int[numberofCards];
@@ -38,7 +42,7 @@ public class PlayManager : MonoBehaviour
         //Generate cards model
         float width = (6 * Camera.main.orthographicSize * Camera.main.aspect) / (4 * cols + 1);
         float height = width * ratio;
-        float deltaHeight = (2 * Camera.main.orthographicSize - height * rows) / (rows + 1);
+        float deltaHeight = (2 * Camera.main.orthographicSize * 9/10 - height * rows) / (rows + 1);
 
         //Creating mesh
         for (int x = 0; x < rows; x++)
@@ -150,7 +154,7 @@ public class PlayManager : MonoBehaviour
                 gameObject.GetComponent<MeshFilter>().mesh = mesh;
 
                 //Position of card
-                gameObject.transform.position = new Vector3(-Camera.main.orthographicSize * Camera.main.aspect, 0, Camera.main.orthographicSize - height);
+                gameObject.transform.position = new Vector3(-Camera.main.orthographicSize * Camera.main.aspect, 0, Camera.main.orthographicSize * 9/10 - height);
                 gameObject.transform.position += new Vector3(width * y * 4 / 3 + width / 3 + width/2, thickness/2, -deltaHeight - x * (height + deltaHeight) + height/2);
 
                 //Material Creation
@@ -218,7 +222,7 @@ public class PlayManager : MonoBehaviour
 
         if (points >= numberofCards)
         {
-            Debug.Log("Win");
+            SceneManager.LoadScene(2);
         }
     }
 }
