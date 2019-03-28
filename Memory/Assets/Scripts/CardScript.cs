@@ -7,8 +7,15 @@ public class CardScript : MonoBehaviour
     Animator animator;
     public bool selected;
 
+    [SerializeField] AudioSource audio;
+
     void Start()
     {
+        audio = GetComponent<AudioSource>();
+        audio.clip = Resources.Load<AudioClip>("SoundFX/CardFlip");
+        audio.volume = .5f;
+        audio.playOnAwake = false;
+
         animator = GetComponent<Animator>();
 
         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/AnimationOfCards");
@@ -27,6 +34,9 @@ public class CardScript : MonoBehaviour
 
                 int index = int.Parse(gameObject.name[6].ToString());
                 GameObject.Find("PlayManager").GetComponent<PlayManager>().UpdateState(index);
+
+                audio.pitch = Random.Range(.8f, 1.2f);
+                audio.Play();
             }
             else
             {
@@ -41,5 +51,8 @@ public class CardScript : MonoBehaviour
     {
         animator.SetBool("FaceUp", false);
         animator.SetBool("FaceDown", true);
+
+        audio.pitch = Random.Range(.8f, 1.2f);
+        audio.Play();
     }
 }

@@ -15,10 +15,20 @@ public class Canvas : MonoBehaviour
     public int rowsHard;
     public int colsHard;
 
+    [SerializeField] AudioSource menu;
+    [SerializeField] float delay = 1f;
+
+    void Start()
+    {
+        menu = GetComponent<AudioSource>();
+    }
 
     public void BackToMenu()
     {
-        SceneManager.LoadScene(0);
+        menu.pitch = Random.Range(.8f, 1.2f);
+        menu.Play();
+
+        StartCoroutine(loadScene(0));
     }
 
     public void Play()
@@ -28,6 +38,9 @@ public class Canvas : MonoBehaviour
         GameObject.Find("Difficoult").transform.Find("Easy").gameObject.SetActive(true);
         GameObject.Find("Difficoult").transform.Find("Medium").gameObject.SetActive(true);
         GameObject.Find("Difficoult").transform.Find("Hard").gameObject.SetActive(true);
+
+        menu.pitch = Random.Range(.8f, 1.2f);
+        menu.Play();
     }
 
     public void Easy()
@@ -35,20 +48,51 @@ public class Canvas : MonoBehaviour
         PlayerPrefs.SetInt("rows", rowsEasy);
         PlayerPrefs.SetInt("cols", colsEasy);
 
-        SceneManager.LoadScene(1);
+        menu.pitch = Random.Range(.8f, 1.2f);
+        menu.Play();
+
+        GameObject.Find("Difficoult").transform.Find("Easy").gameObject.SetActive(false);
+        GameObject.Find("Difficoult").transform.Find("Medium").gameObject.SetActive(false);
+        GameObject.Find("Difficoult").transform.Find("Hard").gameObject.SetActive(false);
+        GameObject.Find("Difficoult").transform.Find("Loading").gameObject.SetActive(true);
+
+        StartCoroutine(loadScene(1));
     }
     public void Medium()
     {
         PlayerPrefs.SetInt("rows", rowsMedium);
         PlayerPrefs.SetInt("cols", colsMedium);
 
-        SceneManager.LoadScene(1);
+        menu.pitch = Random.Range(.8f, 1.2f);
+        menu.Play();
+
+        GameObject.Find("Difficoult").transform.Find("Easy").gameObject.SetActive(false);
+        GameObject.Find("Difficoult").transform.Find("Medium").gameObject.SetActive(false);
+        GameObject.Find("Difficoult").transform.Find("Hard").gameObject.SetActive(false);
+        GameObject.Find("Difficoult").transform.Find("Loading").gameObject.SetActive(true);
+
+        StartCoroutine(loadScene(1));
     }
     public void Hard()
     {
         PlayerPrefs.SetInt("rows", rowsHard);
         PlayerPrefs.SetInt("cols", colsHard);
 
-        SceneManager.LoadScene(1);
+        menu.pitch = Random.Range(.8f, 1.2f);
+        menu.Play();
+
+        GameObject.Find("Difficoult").transform.Find("Easy").gameObject.SetActive(false);
+        GameObject.Find("Difficoult").transform.Find("Medium").gameObject.SetActive(false);
+        GameObject.Find("Difficoult").transform.Find("Hard").gameObject.SetActive(false);
+        GameObject.Find("Difficoult").transform.Find("Loading").gameObject.SetActive(true);
+
+        StartCoroutine(loadScene(1));
+    }
+
+    IEnumerator loadScene(int index)
+    {
+        yield return new WaitForSecondsRealtime(1f);
+
+        SceneManager.LoadScene(index);
     }
 }

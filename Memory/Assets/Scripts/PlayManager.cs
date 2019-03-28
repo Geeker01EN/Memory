@@ -17,6 +17,7 @@ public class PlayManager : MonoBehaviour
 
     void Start()
     {
+
         rows = PlayerPrefs.GetInt("rows");
         cols = PlayerPrefs.GetInt("cols");
 
@@ -148,7 +149,7 @@ public class PlayManager : MonoBehaviour
                 mesh.RecalculateNormals();
 
                 //Creation of the gameObject
-                GameObject gameObject = new GameObject("Cards " + (cols * x + y), typeof(MeshFilter), typeof(MeshRenderer), typeof(BoxCollider), typeof(Animator), typeof(CardScript));
+                GameObject gameObject = new GameObject("Cards " + (cols * x + y), typeof(MeshFilter), typeof(MeshRenderer), typeof(BoxCollider), typeof(Animator), typeof(CardScript), typeof(AudioSource));
 
                 //Apply mesh to gameObject
                 gameObject.GetComponent<MeshFilter>().mesh = mesh;
